@@ -1,0 +1,79 @@
+*, *::before, *::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body{
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+}
+
+.test{
+    display: grid;
+    grid-template-rows: 50% repeat(3, 1fr);
+    justify-content: center;
+    align-items: center;
+}
+
+.status{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sentence{
+    text-align: center;
+    font-size: 3rem;
+}
+.sentence::first-letter{
+    text-transform: capitalize;
+}
+.sentence-recording{
+    font-size: 2rem;
+}
+
+.sentence-recording:not(:empty)::before{
+    content: 'Your Attempt: ';
+    font-size: 1.5rem;
+    margin-right: 1rem;
+}
+
+
+.record-icon{
+    width: 3rem;
+    aspect-ratio: 1/1;
+    color: rgb(224, 108, 108);
+    font-size: 5rem;
+    opacity: 0.3;
+}
+
+.record-icon.recording{
+    opacity: 1;
+    color: red;
+    animation-name: record;
+    animation-duration: 1600ms;
+    animation-timing-function: ease-out;
+    animation-iteration-count: infinite;
+}
+
+.buttons{
+    display: flex;
+    gap: 1rem;
+}
+
+.btn{
+    text-transform: capitalize;
+    padding: 1rem;
+    border-radius: 0.2rem;
+}
+
+
+@keyframes record {
+    80%{
+        transform: scale(1.1);
+    }
+}

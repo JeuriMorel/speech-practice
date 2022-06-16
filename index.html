@@ -1,18 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Practice Your Speech</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
-</head>
-<body>
-    <p class="output"></p>
-    <button type="button" data-button="record">
-        record
-    </button>
-    <button type="button" data-button="stop"></button>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Practice Your Speech</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+            integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+        <link rel="stylesheet" href="styles.css" />
+        <script src="script.js" defer></script>
+    </head>
+    <body>
+
+        <div class="test">
+            <div class="status">
+                <i class="fa-solid fa-microphone-lines record-icon" data-icon="recording"></i>
+            </div>
+            <p class="sentence sentence-test" data-paragraph="test sentence"></p>
+            <p class="sentence sentence-recording" data-paragraph="output"></p>
+        </div>
+
+
+        <div class="buttons">
+            <button type="button" class="btn" data-button="record" disabled>record</button>
+            <button type="button" class="btn" data-button="stop" disabled>stop</button>
+            <button type="button" class="btn" data-button="new sentence">generate new sentence</button>
+        </div>
+    </body>
 </html>
