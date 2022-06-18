@@ -13,23 +13,107 @@
             referrerpolicy="no-referrer"
         />
         <link rel="stylesheet" href="styles.css" />
-        <script src="script.js" defer></script>
+        <script type="module" src="script.js" defer></script>
     </head>
     <body>
 
+        <section class="forms">
+            <form class="radio-form radio" data-form="difficulty">
+                <label
+                    ><input
+                        type="radio"
+                        name="difficulty"
+                        id="beginner"
+                        value="beginner"
+                        checked
+                    />
+                    beginner</label
+                >
+                <label
+                    ><input
+                        type="radio"
+                        name="difficulty"
+                        id="intermediate"
+                        value="intermediate"
+                    />
+                    intermediate</label
+                >
+                <label
+                    ><input
+                        type="radio"
+                        name="difficulty"
+                        id="advance"
+                        value="advance"
+                    />
+                    advance</label
+                >
+                <label
+                    ><input
+                        type="radio"
+                        name="difficulty"
+                        id="tongue-twisters"
+                        value="tongue_twisters"
+                    />
+                    tongue-twisters</label
+                >
+            </form>
+            <form class="radio-form radio" data-form="language">
+                <label
+                    ><input
+                        type="radio"
+                        name="language"
+                        id="english"
+                        value="english"
+                        checked
+                    />
+                    english</label
+                >
+                <label
+                    ><input
+                        type="radio"
+                        name="language"
+                        id="spanish"
+                        value="spanish"
+                    />
+                    spanish</label
+                >
+                <label
+                    ><input
+                        type="radio"
+                        name="language"
+                        id="french"
+                        value="french"
+                    />
+                    french</label
+                >
+            </form>
+
+        </section>
+
         <div class="test">
             <div class="status">
-                <i class="fa-solid fa-microphone-lines record-icon" data-icon="recording"></i>
+                <i
+                    class="fa-solid fa-microphone-lines record-icon"
+                    data-icon="recording"
+                ></i>
             </div>
-            <p class="sentence sentence-test" data-paragraph="test sentence"></p>
+            <p
+                class="sentence sentence-test"
+                data-paragraph="test sentence"
+            ></p>
             <p class="sentence sentence-recording" data-paragraph="output"></p>
         </div>
 
-
         <div class="buttons">
-            <button type="button" class="btn" data-button="record" disabled>record</button>
-            <button type="button" class="btn" data-button="stop" disabled>stop</button>
-            <button type="button" class="btn" data-button="new sentence">generate new sentence</button>
+            <button type="button" class="btn" data-button="record" disabled>
+                record
+            </button>
+            <button type="button" class="btn" data-button="stop" disabled>
+                stop
+            </button>
+            <button type="button" class="btn" data-button="new sentence">
+                generate new sentence
+            </button>
         </div>
     </body>
 </html>

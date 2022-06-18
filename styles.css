@@ -1,21 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400&display=swap');
+
 *, *::before, *::after{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-
 body{
     min-height: 100vh;
     display: grid;
     place-items: center;
+    padding: 2rem;
+    font-family: 'Inconsolata', monospace;
+    font-weight: 300;
 }
 
 .test{
     display: grid;
-    grid-template-rows: 50% repeat(3, 1fr);
+    grid-template-rows: auto repeat(2, 1fr) auto;
     justify-content: center;
     align-items: center;
+    padding-bottom: 2rem;
 }
 
 .status{
@@ -28,18 +33,27 @@ body{
 .sentence{
     text-align: center;
     font-size: 3rem;
+    font-weight: 400;
 }
 .sentence::first-letter{
     text-transform: capitalize;
 }
 .sentence-recording{
     font-size: 2rem;
+    padding: 0.5rem;
 }
 
 .sentence-recording:not(:empty)::before{
     content: 'Your Attempt: ';
+    font-weight: 300;
     font-size: 1.5rem;
     margin-right: 1rem;
+}
+.sentence-recording:not(:empty).success{
+    background-color: aquamarine;
+}
+.sentence-recording:not(:empty).error{
+    background-color: red;
 }
 
 
@@ -76,4 +90,32 @@ body{
     80%{
         transform: scale(1.1);
     }
+}
+
+.forms{
+    display: flex;
+    font-size: 1.5rem;
+    justify-content: space-evenly;
+    width: 100%;
+    accent-color: rgb(20, 125, 90);
+}
+
+
+.radio-form{
+    display: flex;
+    flex-direction: column;
+    text-transform: uppercase;
+}
+
+input[type="radio"]{
+    vertical-align: middle;
+    opacity: 0;
+}
+input[type="radio"]:checked{
+    opacity: 1;
+    background-color: red;
+}
+
+label:focus-within{
+    font-weight: 400;
 }
