@@ -17,103 +17,87 @@
     </head>
     <body>
 
-        <section class="forms">
-            <form class="radio-form radio" data-form="difficulty">
-                <label
-                    ><input
-                        type="radio"
-                        name="difficulty"
-                        id="beginner"
-                        value="beginner"
-                        checked
-                    />
-                    beginner</label
-                >
-                <label
-                    ><input
-                        type="radio"
-                        name="difficulty"
-                        id="intermediate"
-                        value="intermediate"
-                    />
-                    intermediate</label
-                >
-                <label
-                    ><input
-                        type="radio"
-                        name="difficulty"
-                        id="advance"
-                        value="advance"
-                    />
-                    advance</label
-                >
-                <label
-                    ><input
-                        type="radio"
-                        name="difficulty"
-                        id="tongue-twisters"
-                        value="tongue_twisters"
-                    />
-                    tongue-twisters</label
-                >
-            </form>
-            <form class="radio-form radio" data-form="language">
-                <label
-                    ><input
-                        type="radio"
-                        name="language"
-                        id="english"
-                        value="english"
-                        checked
-                    />
-                    english</label
-                >
-                <label
-                    ><input
-                        type="radio"
-                        name="language"
-                        id="spanish"
-                        value="spanish"
-                    />
-                    spanish</label
-                >
-                <label
-                    ><input
-                        type="radio"
-                        name="language"
-                        id="french"
-                        value="french"
-                    />
-                    french</label
-                >
-            </form>
-
-        </section>
-
-        <div class="test">
-            <div class="status">
-                <i
-                    class="fa-solid fa-microphone-lines record-icon"
-                    data-icon="recording"
-                ></i>
+        <main class="container">
+            <section class="forms">
+                <form class="radio-form radio" data-form="difficulty">
+                    <input
+                            type="radio"
+                            name="difficulty"
+                            id="beginner"
+                            value="beginner"
+                            checked
+                        />
+                        
+                    <label for="beginner">beginner</label>
+                    <input
+                            type="radio"
+                            name="difficulty"
+                            id="intermediate"
+                            value="intermediate"
+                        />
+                        <label for="intermediate">intermediate</label>
+                        
+                    <input
+                            type="radio"
+                            name="difficulty"
+                            id="advance"
+                            value="advance"
+                        />
+                        <label for="advance">advance</label>
+                    <input
+                            type="radio"
+                            name="difficulty"
+                            id="tongue-twisters"
+                            value="tongue_twisters"
+                        />
+                        <label for="tongue-twisters">tongue-twisters</label>
+                </form>
+                <form class="radio-form radio" data-form="language">
+                    <input
+                            type="radio"
+                            name="language"
+                            id="english"
+                            value="english"
+                            checked
+                        />
+                        <label for="english">english</label>
+                    <input
+                            type="radio"
+                            name="language"
+                            id="spanish"
+                            value="spanish"
+                        />
+                        <label for="spanish">spanish</label>
+                    <input
+                            type="radio"
+                            name="language"
+                            id="french"
+                            value="french"
+                        />
+                        <label for="french">french</label>
+                </form>
+    
+            </section>
+    
+            <div class="test">
+                <div class="status" data-confidence>
+                    <span></span><span></span><span></span><span></span><span></span><span></span>
+                </div>
+                <p
+                    class="sentence sentence-test"
+                    data-paragraph="test sentence"
+                ></p>
+                <p class="sentence sentence-recording" data-paragraph="output"></p>
             </div>
-            <p
-                class="sentence sentence-test"
-                data-paragraph="test sentence"
-            ></p>
-            <p class="sentence sentence-recording" data-paragraph="output"></p>
-        </div>
+    
+            <div class="buttons">
+                <button type="button" class="btn btn-record" data-button="record" disabled>
+                </button>
+                <button type="button" class="btn btn-new" data-button="new sentence">
+                    generate new sentence
+                </button>
+            </div>
+        </main>
 
-        <div class="buttons">
-            <button type="button" class="btn" data-button="record" disabled>
-                record
-            </button>
-            <button type="button" class="btn" data-button="stop" disabled>
-                stop
-            </button>
-            <button type="button" class="btn" data-button="new sentence">
-                generate new sentence
-            </button>
-        </div>
     </body>
 </html>

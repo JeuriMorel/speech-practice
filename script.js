@@ -1,25 +1,28 @@
 import { ENGLISH } from "./english-sentences.js"
 
-
 const languageCodes = {
     ENGLISH: "en-US",
     SPANISH: "es-ES",
-    FRENCH: "fr-FR"
+    FRENCH: "fr-FR",
 }
 
 const languageObjects = {
-    ENGLISH: ENGLISH
+    ENGLISH: ENGLISH,
 }
 
-function resetButtons(){
+function resetButtons() {
     startRecordBtn.disabled = true
-    stopRecordBtn.disabled = true
     resultParagraph.textContent = ""
-    testParagraph.textContent = ''
+    testParagraph.textContent = ""
+    clearConfidence()
+}
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toLocaleUpperCase() + string.slice(1)
 }
 
 // DIFFICULTY FORM
-const difficultyForm = document.querySelector("[data-form='difficulty']");
+const difficultyForm = document.querySelector("[data-form='difficulty']")
 const difficultyInputs = [...difficultyForm.querySelectorAll("input")]
 
 difficultyInputs.forEach(input => {
@@ -30,8 +33,8 @@ difficultyInputs.forEach(input => {
 })
 
 //LANGUAGE FORM
-const languageForm = document.querySelector("[data-form='language']");
-const languageInputs = [...languageForm.querySelectorAll("input")];
+const languageForm = document.querySelector("[data-form='language']")
+const languageInputs = [...languageForm.querySelectorAll("input")]
 
 languageInputs.forEach(input => {
     input.addEventListener("click", e => {
@@ -77,9 +80,10 @@ const recognition = new SpeechRecognition()
 let selectedLanguage = languageInputs
     .find(input => input.checked)
     .value.toLocaleUpperCase()
-let selectedDifficulty = difficultyInputs.find(input => input.checked).value.toLocaleUpperCase()
+let selectedDifficulty = difficultyInputs
+    .find(input => input.checked)
+    .value.toLocaleUpperCase()
 let sentencesArray
-
 
 recognition.continuous = false
 recognition.lang = languageCodes[selectedLanguage]
@@ -87,53 +91,58 @@ recognition.interimResults = false
 recognition.maxAlternatives = 1
 
 const startRecordBtn = document.querySelector("[data-button='record']")
-const stopRecordBtn = document.querySelector("[data-button='stop']")
 const newSentenceBtn = document.querySelector("[data-button='new sentence']")
 const resultParagraph = document.querySelector("[data-paragraph='output']")
 const testParagraph = document.querySelector("[data-paragraph='test sentence']")
-const recordingIcon = document.querySelector("[data-icon='recording']")
+const recordingStatus = document.querySelector(".status")
 
+function clearConfidence() {
+    recordingStatus.setAttribute("data-confidence", "")
+}
 
-
-newSentenceBtn.addEventListener('click', () => {
+newSentenceBtn.addEventListener("click", () => {
+    clearConfidence()
     sentencesArray = languageObjects[selectedLanguage][selectedDifficulty]
-    let sentence = sentencesArray[Math.floor(Math.random() * sentencesArray.length)]
+    let sentence =
+        sentencesArray[Math.floor(Math.random() * sentencesArray.length)]
     resultParagraph.textContent = ""
     startRecordBtn.disabled = false
     testParagraph.textContent = sentence
-    startRecordBtn.textContent = "record"
 })
 
 startRecordBtn.addEventListener("click", () => {
-    recognition.start()
-    recordingIcon.classList.add("recording")
-    stopRecordBtn.disabled = false
-    resultParagraph.textContent = ''
-    resultParagraph.classList.remove("success", "error")
-    console.log("record start")
+    clearConfidence()
+    if (startRecordBtn.classList.contains("recording")) {
+        recognition.abort()
+        recordingStatus.classList.remove("animate-waves")
+        startRecordBtn.classList.remove("recording")
+    } else {
+        recognition.start()
+        recordingStatus.classList.add("animate-waves")
+        startRecordBtn.classList.add("recording")
+        resultParagraph.textContent = ""
+        resultParagraph.classList.remove("success", "error")
+        console.log("record start")
+    }
 })
-stopRecordBtn.addEventListener("click", () => {
-    recognition.abort()
-    recordingIcon.classList.remove("recording")
-    stopRecordBtn.disabled = true
-    startRecordBtn.textContent = "try again"
-})
+
 recognition.onspeechend = function () {
     recognition.stop()
-    recordingIcon.classList.remove("recording")
-    stopRecordBtn.disabled = true
+    recordingStatus.classList.remove("animate-waves")
+    startRecordBtn.classList.remove("recording")
     console.log("Speech recognition has stopped.")
 }
 
 recognition.onresult = function (event) {
-    let testString = testParagraph.textContent.toLocaleLowerCase()
+    let testString = testParagraph.textContent
+        .toLocaleLowerCase()
         .replace(/[.,/#!$%^&*;:{}=-_~()]/g, "")
     let result = event.results[0][0].transcript.toLocaleLowerCase()
+    let confidence = Math.floor(event.results[0][0].confidence * 100)
     let success = result === testString
-    if(!success) startRecordBtn.textContent = 'try again'
-    if(success) startRecordBtn.textContent = 'record'
-    resultParagraph.textContent = result.replace(/(^|\W)i('?\s+)/gm, `$1I$2`)
-    resultParagraph.classList.add(success ? 'success' : 'error')
+    if (success) {
+        recordingStatus.setAttribute("data-confidence", `${confidence}%`)
+    }
+    resultParagraph.textContent = capitalizeFirstLetter(result.replace(/(^|\W)i('?\s+)/gm, `$1I$2`))
+    resultParagraph.classList.add(success ? "success" : "error")
 }
-
-

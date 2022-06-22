@@ -1,21 +1,37 @@
-@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400&display=swap");
 
-*, *::before, *::after{
+:root {
+    --color-lt-blue: #0998eb;
+    
+}
+
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body{
+body {
     min-height: 100vh;
+    font-family: "Inconsolata", monospace;
+    font-weight: 300;
     display: grid;
     place-items: center;
-    padding: 2rem;
-    font-family: 'Inconsolata', monospace;
-    font-weight: 300;
 }
 
-.test{
+.container {
+    display: grid;
+    place-items: center;
+    grid-template-rows: 84px auto 64px;
+    padding-block: 1rem;
+    height: 100%;
+    padding: clamp(1rem, 1vw, 2rem);
+    width: clamp(375px, 80vw, 900px);
+}
+
+.test {
     display: grid;
     grid-template-rows: auto repeat(2, 1fr) auto;
     justify-content: center;
@@ -23,99 +39,215 @@ body{
     padding-bottom: 2rem;
 }
 
-.status{
-    width: 100%;
+.status {
+    width: 8rem;
+    height: 3rem;
+    margin-inline: auto;
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 0.1rem;
 }
 
-.sentence{
-    text-align: center;
+.status::after {
+    position: absolute;
+    inset: 0;
+    content: attr(data-confidence);
     font-size: 3rem;
-    font-weight: 400;
-}
-.sentence::first-letter{
-    text-transform: capitalize;
-}
-.sentence-recording{
-    font-size: 2rem;
-    padding: 0.5rem;
+    text-align: center;
 }
 
-.sentence-recording:not(:empty)::before{
-    content: 'Your Attempt: ';
-    font-weight: 300;
-    font-size: 1.5rem;
-    margin-right: 1rem;
-}
-.sentence-recording:not(:empty).success{
-    background-color: aquamarine;
-}
-.sentence-recording:not(:empty).error{
-    background-color: red;
-}
-
-
-.record-icon{
-    width: 3rem;
-    aspect-ratio: 1/1;
-    color: rgb(224, 108, 108);
-    font-size: 5rem;
-    opacity: 0.3;
-}
-
-.record-icon.recording{
-    opacity: 1;
-    color: red;
-    animation-name: record;
-    animation-duration: 1600ms;
-    animation-timing-function: ease-out;
+.status.animate-waves span {
+    animation-name: sound;
+    animation-timing-function: ease-in-out;
     animation-iteration-count: infinite;
 }
 
-.buttons{
-    display: flex;
-    gap: 1rem;
+.status span {
+    width: 1rem;
+    height: 0;
+    background-color: var(--color-lt-blue);
+    border-radius: 2px;
 }
 
-.btn{
-    text-transform: capitalize;
-    padding: 1rem;
-    border-radius: 0.2rem;
+span:nth-child(1) {
+    animation-duration: 600ms;
+    max-height: 1.3rem;
+}
+span:nth-child(2) {
+    animation-duration: 800ms;
+    max-height: 2rem;
+}
+span:nth-child(3) {
+    animation-duration: 400ms;
+}
+span:nth-child(4) {
+    animation-duration: 1000ms;
+}
+span:nth-child(5) {
+    animation-duration: 900ms;
+    max-height: 2rem;
+}
+span:nth-child(6) {
+    animation-duration: 700ms;
+    max-height: 1.3rem;
 }
 
-
-@keyframes record {
-    80%{
-        transform: scale(1.1);
+@keyframes sound {
+    20% {
+        height: 3rem;
+    }
+    50% {
+        height: 0.3rem;
+    }
+    80% {
+        height: 1rem;
+    }
+    100% {
+        height: 0%;
     }
 }
 
-.forms{
-    display: flex;
-    font-size: 1.5rem;
-    justify-content: space-evenly;
-    width: 100%;
-    accent-color: rgb(20, 125, 90);
-}
-
-
-.radio-form{
-    display: flex;
-    flex-direction: column;
-    text-transform: uppercase;
-}
-
-input[type="radio"]{
-    vertical-align: middle;
-    opacity: 0;
-}
-input[type="radio"]:checked{
-    opacity: 1;
-    background-color: red;
-}
-
-label:focus-within{
+.sentence {
+    text-align: center;
+    font-size: clamp(1.5rem, 0.1071rem + 3.8095vw, 2.25rem);
     font-weight: 400;
+}
+
+.sentence-recording {
+    padding: 1rem;
+}
+
+.sentence-recording:not(:empty)::before {
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font: var(--fa-font-solid);
+    content: "\f071";
+    font-size: 1.5rem;
+    margin-right: 2rem;
+}
+.sentence-recording:not(:empty).success {
+    background-color: aquamarine;
+}
+.sentence-recording:not(:empty).success::before {
+    content: "\f058";
+}
+.sentence-recording:not(:empty).error {
+    color: rgb(180, 20, 20);
+    background-color: #ffbaba;
+}
+
+.buttons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.btn {
+    position: relative;
+    text-transform: capitalize;
+    font-size: 1.5rem;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    box-shadow: -5px 6px 5px 0px rgba(0, 0, 0, 0.5);
+    border-color: #777;
+    font-size: clamp(1.25rem, 0.8036rem + 1.9048vw, 1.875rem);
+}
+
+.btn:active {
+    top: 1px;
+    box-shadow: -3px 3px 3px 0px rgba(0, 0, 0, 0.5);
+}
+
+.btn-record {
+    border-top: 2px solid #777;
+    border-right: 2px solid #777;
+    border-left: 2px solid white;
+    border-bottom: 2px solid white;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+    color: var(--color-lt-blue);
+}
+.btn-new {
+    padding: 1rem;
+}
+
+.btn-record.recording::before {
+    content: "\f28d";
+    color: red;
+}
+
+.btn-record::before {
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font: var(--fa-font-solid);
+    content: "\f130";
+}
+
+.btn-record:disabled::before {
+    content: "\f131";
+}
+
+.forms {
+    --gap-x: 1rem;
+    --gap-y: 0.3rem;
+    --label-height: clamp(1.25rem, 0.8036rem + 1.9048vw, 1.875rem);
+    --left: calc(0px - var(--label-height) - var(--gap-x));
+    display: flex;
+    font-size: clamp(1.25rem, 0.8036rem + 1.9048vw, 1.875rem);
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 2rem;
+    accent-color: var(--color-lt-blue);
+}
+
+.radio-form {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    text-transform: uppercase;
+    gap:  var(--gap-y) var(--gap-x);
+}
+
+input[type="radio"] {
+    vertical-align: middle;
+    z-index: -2;
+}
+input[type="radio"]:checked + label{
+    color: white;
+    background-color: transparent;
+}
+
+input[type="radio"]:checked + label::before {
+    background-color: var(--color-lt-blue);
+    border-color:  #333 #333 #777 #777;
+    width: calc(100% + (var(--label-height ) * 2) + var(--gap-x) );
+}
+
+
+label {
+    position: relative;
+    cursor: pointer;
+    height: var(--label-height);
+    line-height: var(--label-height);
+}
+
+label::before{
+    content: '';
+    position: absolute;
+    width: var(--label-height);
+    height: var(--label-height);
+    background-color: white;
+    border: 2px solid var(--color-lt-blue);
+    left: var(--left);
+    top: 50%;
+    border-radius: 100vw;
+    transform: translateY(-50%);
+    transition: width 250ms cubic-bezier(0,.73,.74,.39);
+    z-index: -1;
 }
