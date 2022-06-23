@@ -16,88 +16,97 @@
         <script type="module" src="script.js" defer></script>
     </head>
     <body>
-
         <main class="container">
-            <section class="forms">
+            <div class="forms">
                 <form class="radio-form radio" data-form="difficulty">
                     <input
-                            type="radio"
-                            name="difficulty"
-                            id="beginner"
-                            value="beginner"
-                            checked
-                        />
-                        
+                        type="radio"
+                        name="difficulty"
+                        id="beginner"
+                        value="beginner"
+                        checked
+                    />
+
                     <label for="beginner">beginner</label>
                     <input
-                            type="radio"
-                            name="difficulty"
-                            id="intermediate"
-                            value="intermediate"
-                        />
-                        <label for="intermediate">intermediate</label>
-                        
+                        type="radio"
+                        name="difficulty"
+                        id="intermediate"
+                        value="intermediate"
+                    />
+                    <label for="intermediate">intermediate</label>
+
                     <input
-                            type="radio"
-                            name="difficulty"
-                            id="advance"
-                            value="advance"
-                        />
-                        <label for="advance">advance</label>
+                        type="radio"
+                        name="difficulty"
+                        id="advanced"
+                        value="advanced"
+                    />
+                    <label for="advanced">advanced</label>
                     <input
-                            type="radio"
-                            name="difficulty"
-                            id="tongue-twisters"
-                            value="tongue_twisters"
-                        />
-                        <label for="tongue-twisters">tongue-twisters</label>
+                        type="radio"
+                        name="difficulty"
+                        id="tongue-twisters"
+                        value="tongue_twisters"
+                    />
+                    <label for="tongue-twisters">tongue-twisters</label>
                 </form>
                 <form class="radio-form radio" data-form="language">
                     <input
-                            type="radio"
-                            name="language"
-                            id="english"
-                            value="english"
-                            checked
-                        />
-                        <label for="english">english</label>
+                        type="radio"
+                        name="language"
+                        id="english"
+                        value="english"
+                        checked
+                    />
+                    <label for="english">english</label>
                     <input
-                            type="radio"
-                            name="language"
-                            id="spanish"
-                            value="spanish"
-                        />
-                        <label for="spanish">spanish</label>
+                        type="radio"
+                        name="language"
+                        id="spanish"
+                        value="spanish"
+                    />
+                    <label for="spanish">spanish</label>
                     <input
-                            type="radio"
-                            name="language"
-                            id="french"
-                            value="french"
-                        />
-                        <label for="french">french</label>
+                        type="radio"
+                        name="language"
+                        id="french"
+                        value="french"
+                    />
+                    <label for="french">french</label>
                 </form>
-    
-            </section>
-    
+            </div>
+
             <div class="test">
                 <div class="status" data-confidence>
-                    <span></span><span></span><span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span
+                    ><span></span><span></span>
                 </div>
                 <p
                     class="sentence sentence-test"
                     data-paragraph="test sentence"
                 ></p>
-                <p class="sentence sentence-recording" data-paragraph="output"></p>
+                <p
+                    class="sentence sentence-recording"
+                    data-paragraph="output"
+                ></p>
             </div>
-    
+
             <div class="buttons">
-                <button type="button" class="btn btn-record" data-button="record" disabled>
-                </button>
-                <button type="button" class="btn btn-new" data-button="new sentence">
+                <button
+                    type="button"
+                    class="btn btn-new"
+                    data-button="new sentence"
+                >
                     generate new sentence
                 </button>
+                <button
+                    type="button"
+                    class="btn btn-record"
+                    data-button="record"
+                    disabled
+                ></button>
             </div>
         </main>
-
     </body>
 </html>

@@ -2,7 +2,9 @@
 
 :root {
     --color-lt-blue: #0998eb;
-    
+    --lt-blue-h: 202;
+    --lt-blue-s: 93%;
+    --lt-blue-l: 48%;
 }
 
 *,
@@ -33,7 +35,7 @@ body {
 
 .test {
     display: grid;
-    grid-template-rows: auto repeat(2, 1fr) auto;
+    grid-template-rows: auto repeat(2, minmax(0, 1fr));
     justify-content: center;
     align-items: center;
     padding-bottom: 2rem;
@@ -154,14 +156,21 @@ span:nth-child(6) {
     box-shadow: -5px 6px 5px 0px rgba(0, 0, 0, 0.5);
     border-color: #777;
     font-size: clamp(1.25rem, 0.8036rem + 1.9048vw, 1.875rem);
+    user-select: none;
 }
 
-.btn:active {
-    top: 1px;
+.btn-record:active:not([disabled]) {
     box-shadow: -3px 3px 3px 0px rgba(0, 0, 0, 0.5);
+}
+.btn:active:not([disabled]) {
+    top: 1px;
 }
 
 .btn-record {
+    --hue: var(--lt-blue-h);
+    --saturation: var(--lt-blue-s);
+    --lightness: calc(var(--lt-blue-l) + 15%);
+
     border-top: 2px solid #777;
     border-right: 2px solid #777;
     border-left: 2px solid white;
@@ -170,12 +179,40 @@ span:nth-child(6) {
     height: 4rem;
     border-radius: 50%;
     aspect-ratio: 1/1;
-    color: var(--color-lt-blue);
-}
-.btn-new {
-    padding: 1rem;
+    color: hsl(var(--hue), var(--saturation), var(--lightness));
 }
 
+.btn:disabled {
+    cursor: not-allowed;
+}
+
+.btn-record:hover,
+.btn-record:focus {
+    --lightness: var(--lt-blue-l);
+}
+
+.btn-new {
+    background-color: #ffffff;
+    border: 0;
+    border-radius: 0.5rem;
+    color: #111827;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    padding: 0.75rem 1rem;
+    text-decoration: none #d1d5db solid;
+    text-decoration-thickness: auto;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 70%), 0 1px 2px 0 rgb(0 0 0 / 60%);
+    touch-action: manipulation;
+}
+
+.btn-new:hover {
+    background-color: rgb(249, 250, 251);
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+.btn:focus-visible {
+    box-shadow: none;
+}
 .btn-record.recording::before {
     content: "\f28d";
     color: red;
@@ -191,19 +228,22 @@ span:nth-child(6) {
 
 .btn-record:disabled::before {
     content: "\f131";
+    color: #777;
 }
 
 .forms {
     --gap-x: 1rem;
     --gap-y: 0.3rem;
-    --label-height: clamp(1.25rem, 0.8036rem + 1.9048vw, 1.875rem);
-    --left: calc(0px - var(--label-height) - var(--gap-x));
+    --label-height: clamp(1rem, 0.8036rem + 1.9048vw, 1.5rem);
+    --left: calc(0px - var(--label-height) - var(--gap-x) * 0.7);
+    --hue: var(--lt-blue-h);
+    --saturation: var(--lt-blue-s);
+    --lightness: calc(var(--lt-blue-l) + 15%);
     display: flex;
-    font-size: clamp(1.25rem, 0.8036rem + 1.9048vw, 1.875rem);
+    font-size: clamp(1rem, 0.6429rem + 1.5238vw, 1.5rem);
     justify-content: space-between;
     width: 100%;
     margin-top: 2rem;
-    accent-color: var(--color-lt-blue);
 }
 
 .radio-form {
@@ -211,43 +251,62 @@ span:nth-child(6) {
     grid-template-columns: auto auto;
     align-items: center;
     text-transform: uppercase;
-    gap:  var(--gap-y) var(--gap-x);
+    column-gap: var(--gap-x);
 }
 
 input[type="radio"] {
     vertical-align: middle;
-    z-index: -2;
+    width: calc(var(--label-height) * 0.7);
+    height: calc(var(--label-height) * 0.7);
+    cursor: pointer;
 }
-input[type="radio"]:checked + label{
+input[type="radio"]:checked + label {
     color: white;
     background-color: transparent;
 }
-
-input[type="radio"]:checked + label::before {
-    background-color: var(--color-lt-blue);
-    border-color:  #333 #333 #777 #777;
-    width: calc(100% + (var(--label-height ) * 2) + var(--gap-x) );
+input[type="radio"]:hover + label::before {
+    font-size: 300;
+    background-color: hsl(var(--hue), var(--saturation), var(--lightness));
+    border-color: #333 #333 #777 #777;
 }
 
+input[type="radio"]:focus + label::before {
+    outline: 3px dashed red;
+    outline-offset: 1px;
+}
+
+input[type="radio"]:checked + label::before {
+    --lightness: var(--lt-blue-l);
+    background-color: hsl(var(--hue), var(--saturation), var(--lightness));
+    border-color: #333 #333 #777 #777;
+    width: calc(100% + (var(--label-height) * 1.5) + var(--gap-x));
+}
 
 label {
     position: relative;
     cursor: pointer;
     height: var(--label-height);
     line-height: var(--label-height);
+    z-index: 20;
+    isolation: isolate;
 }
 
-label::before{
-    content: '';
+label::before {
+    --hue: var(--lt-blue-h);
+    --saturation: var(--lt-blue-s);
+    --lightness: calc(var(--lt-blue-l) + 25%);
+
+    content: "";
     position: absolute;
     width: var(--label-height);
     height: var(--label-height);
     background-color: white;
-    border: 2px solid var(--color-lt-blue);
+    border: 2px solid hsl(var(--hue), var(--saturation), var(--lightness));
     left: var(--left);
     top: 50%;
     border-radius: 100vw;
     transform: translateY(-50%);
-    transition: width 250ms cubic-bezier(0,.73,.74,.39);
+    transition: width 250ms cubic-bezier(0, 0.73, 0.74, 0.39);
     z-index: -1;
+    pointer-events: none;
 }

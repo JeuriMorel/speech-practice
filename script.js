@@ -1,4 +1,5 @@
 import { ENGLISH } from "./english-sentences.js"
+import { FRENCH } from "./french-sentences.js"
 
 const languageCodes = {
     ENGLISH: "en-US",
@@ -8,6 +9,7 @@ const languageCodes = {
 
 const languageObjects = {
     ENGLISH: ENGLISH,
+    FRENCH: FRENCH
 }
 
 function resetButtons() {
@@ -49,33 +51,6 @@ const SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition
 //     window.SpeechRecognitionEvent || webkitSpeechRecognitionEvent
 
 const recognition = new SpeechRecognition()
-
-// const testSentences = {
-//     1: "se reposer",
-//     2: "se détendre",
-//     3: "Se bronzer",
-//     4: "nager",
-//     5: "Aller à la mer",
-//     6: "Marcher sur la plage",
-//     7: "lire des romans sur la plage",
-//     8: "natation",
-//     9: "se baigner",
-//     10: "faire de la planche à voile",
-//     11: "faire du ski nautique",
-//     12: "faire de la voile",
-//     13: "Faire un pique-nique",
-//     14: "faire du surf",
-//     15: "faire du ski",
-//     16: "faire le tour de",
-//     17: "faire une excursion",
-//     18: "visiter les musées",
-//     19: "faire du camping",
-//     20: "faire du sport",
-//     21: "Faire du vélo",
-//     22: "Faire de l'escalade",
-//     23: "Faire du skate",
-//     24: "Faire du parapente",
-// }
 
 let selectedLanguage = languageInputs
     .find(input => input.checked)
@@ -131,18 +106,22 @@ recognition.onspeechend = function () {
     recordingStatus.classList.remove("animate-waves")
     startRecordBtn.classList.remove("recording")
     console.log("Speech recognition has stopped.")
+    startRecordBtn.disabled = true
 }
 
 recognition.onresult = function (event) {
     let testString = testParagraph.textContent
         .toLocaleLowerCase()
-        .replace(/[.,/#!$%^&*;:{}=-_~()]/g, "")
+        .replace(/[.,/#!$%^&*;:{}=-_~()]/g, "").replace(/\s{2}/g, ' ')
     let result = event.results[0][0].transcript.toLocaleLowerCase()
     let confidence = Math.floor(event.results[0][0].confidence * 100)
-    let success = result === testString
+    let success = result.trim() === testString.trim()
     if (success) {
         recordingStatus.setAttribute("data-confidence", `${confidence}%`)
     }
     resultParagraph.textContent = capitalizeFirstLetter(result.replace(/(^|\W)i('?\s+)/gm, `$1I$2`))
     resultParagraph.classList.add(success ? "success" : "error")
+    setTimeout(() => {
+        startRecordBtn.disabled = false
+    },100)
 }

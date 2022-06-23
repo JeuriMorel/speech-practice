@@ -111,7 +111,7 @@ export const ENGLISH = {
         "I got it",
         "I have been out since morning",
     ],
-    ADVANCE: [
+    ADVANCED: [
         "In our village, folks say God crumbles up the old moon into stars.",
         "She wasn't doing a thing that I could see, except standing there leaning on the balcony railing, holding the universe together.",
         "I took a deep breath and listened to the old brag of my heart; I am, I am, I am.",
