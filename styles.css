@@ -5,6 +5,8 @@
     --lt-blue-h: 202;
     --lt-blue-s: 93%;
     --lt-blue-l: 48%;
+    --container-padding: clamp(1rem, 1vw, 2rem);
+    --container-width: clamp(375px, 80vw, 900px);
 }
 
 *,
@@ -21,6 +23,7 @@ body {
     font-weight: 300;
     display: grid;
     place-items: center;
+    position: relative;
 }
 
 .container {
@@ -29,8 +32,8 @@ body {
     grid-template-rows: 84px auto 64px;
     padding-block: 1rem;
     height: 100%;
-    padding: clamp(1rem, 1vw, 2rem);
-    width: clamp(375px, 80vw, 900px);
+    padding: var(--container-padding);
+    width: var(--container-width);
 }
 
 .test {
@@ -55,9 +58,26 @@ body {
 .status::after {
     position: absolute;
     inset: 0;
-    content: attr(data-confidence);
-    font-size: 3rem;
-    text-align: center;
+    color: hsl(
+        var(--lt-blue-h),
+        var(--lt-blue-s),
+        calc(var(--lt-blue-l) + 25%)
+    );
+    content: "\f254";
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font: var(--fa-font-solid);
+    font-size: 2rem;
+    display: none;
+    animation-name: spin;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-duration: 2000ms;
+}
+
+.show::after {
+    display: grid;
+    place-items: center;
 }
 
 .status.animate-waves span {
@@ -69,7 +89,7 @@ body {
 .status span {
     width: 1rem;
     height: 0;
-    background-color: var(--color-lt-blue);
+    background-color: hsl(var(--lt-blue-h), var(--lt-blue-s), var(--lt-blue-l));
     border-radius: 2px;
 }
 
@@ -108,6 +128,32 @@ span:nth-child(6) {
     }
     100% {
         height: 0%;
+    }
+}
+@keyframes spin {
+    0% {
+        transform: rotate(0);
+    }
+    24% {
+        transform: rotate(0);
+    }
+    25% {
+        transform: rotate(90deg);
+    }
+    49% {
+        transform: rotate(90deg);
+    }
+    50% {
+        transform: rotate(180deg);
+    }
+    74% {
+        transform: rotate(180deg);
+    }
+    75% {
+        transform: rotate(270deg);
+    }
+    99% {
+        transform: rotate(270deg);
     }
 }
 
@@ -150,8 +196,6 @@ span:nth-child(6) {
 .btn {
     position: relative;
     text-transform: capitalize;
-    font-size: 1.5rem;
-    border-radius: 0.4rem;
     cursor: pointer;
     box-shadow: -5px 6px 5px 0px rgba(0, 0, 0, 0.5);
     border-color: #777;
@@ -187,11 +231,12 @@ span:nth-child(6) {
 }
 
 .btn-record:hover,
-.btn-record:focus {
+.btn-record:focus-visible {
     --lightness: var(--lt-blue-l);
 }
 
-.btn-new {
+.btn-new,
+.close-modal {
     background-color: #ffffff;
     border: 0;
     border-radius: 0.5rem;
@@ -205,7 +250,8 @@ span:nth-child(6) {
     touch-action: manipulation;
 }
 
-.btn-new:hover {
+.btn-new:hover,
+.close-modal:hover {
     background-color: rgb(249, 250, 251);
     outline: 2px solid transparent;
     outline-offset: 2px;
@@ -229,6 +275,34 @@ span:nth-child(6) {
 .btn-record:disabled::before {
     content: "\f131";
     color: #777;
+}
+
+.btn-info {
+    --hue: var(--lt-blue-h);
+    --saturation: var(--lt-blue-s);
+    --lightness: calc(var(--lt-blue-l) - 10%);
+    cursor: pointer;
+
+    position: absolute;
+    display: grid;
+    place-items: center;
+    color: hsl(var(--hue), var(--saturation), var(--lightness));
+    right: var(--container-padding);
+    top: calc(var(--container-padding) / 2);
+    border-color: #777;
+    border-radius: 50%;
+    font-size: var(--container-padding);
+    aspect-ratio: 1/1;
+}
+
+.btn-info:hover,
+.btn-info:focus-visible {
+    --lightness: var(--lt-blue-l);
+}
+
+.btn-info:focus-visible {
+    outline: 2px dashed red;
+    outline-offset: 2px;
 }
 
 .forms {
@@ -270,7 +344,7 @@ input[type="radio"]:hover + label::before {
     border-color: #333 #333 #777 #777;
 }
 
-input[type="radio"]:focus + label::before {
+input[type="radio"]:focus-visible + label::before {
     outline: 3px dashed red;
     outline-offset: 1px;
 }
@@ -309,4 +383,25 @@ label::before {
     transition: width 250ms cubic-bezier(0, 0.73, 0.74, 0.39);
     z-index: -1;
     pointer-events: none;
+}
+
+dialog {
+    position: absolute;
+    margin: auto;
+    width: var(--container-width);
+    padding: calc(var(--container-padding) * 3);
+    border-radius: 0.5rem;
+    border: none;
+    font-size: clamp(1rem, 0.6429rem + 1.5238vw, 1.5rem);
+    font-weight: 400;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
+    text-transform: capitalize;
+}
+
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.35);
+}
+
+.close-modal{
+    margin-top: 2rem;
 }

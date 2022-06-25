@@ -1,5 +1,8 @@
 import { ENGLISH } from "./english-sentences.js"
 import { FRENCH } from "./french-sentences.js"
+import {qs, qsa, capitalizeFirstLetter} from "./js-utility-funcs.js"
+
+
 
 const languageCodes = {
     ENGLISH: "en-US",
@@ -9,23 +12,31 @@ const languageCodes = {
 
 const languageObjects = {
     ENGLISH: ENGLISH,
-    FRENCH: FRENCH
+    FRENCH: FRENCH,
 }
 
 function resetButtons() {
     startRecordBtn.disabled = true
     resultParagraph.textContent = ""
     testParagraph.textContent = ""
-    clearConfidence()
+    recordingStatus.classList.remove("show")
 }
 
-function capitalizeFirstLetter(string) {
-    return string.charAt(0).toLocaleUpperCase() + string.slice(1)
-}
+//MODAL
+const btnInfo = qs('.btn-info')
+const modal = qs('dialog')
+const btnCloseModal = qs(".close-modal")
+
+btnInfo.addEventListener("click", () => {
+    modal.showModal()
+})
+btnCloseModal.addEventListener("click", () => {
+    modal.close()
+})
 
 // DIFFICULTY FORM
-const difficultyForm = document.querySelector("[data-form='difficulty']")
-const difficultyInputs = [...difficultyForm.querySelectorAll("input")]
+const difficultyForm = qs("[data-form='difficulty']")
+const difficultyInputs = qsa("input", difficultyForm)
 
 difficultyInputs.forEach(input => {
     input.addEventListener("click", e => {
@@ -35,8 +46,8 @@ difficultyInputs.forEach(input => {
 })
 
 //LANGUAGE FORM
-const languageForm = document.querySelector("[data-form='language']")
-const languageInputs = [...languageForm.querySelectorAll("input")]
+const languageForm = qs("[data-form='language']")
+const languageInputs = qsa("input", languageForm)
 
 languageInputs.forEach(input => {
     input.addEventListener("click", e => {
@@ -46,9 +57,6 @@ languageInputs.forEach(input => {
 })
 
 const SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition
-// const SpeechGrammarList = window.SpeechGrammarList || webkitSpeechGrammarList
-// const SpeechRecognitionEvent =
-//     window.SpeechRecognitionEvent || webkitSpeechRecognitionEvent
 
 const recognition = new SpeechRecognition()
 
@@ -65,18 +73,13 @@ recognition.lang = languageCodes[selectedLanguage]
 recognition.interimResults = false
 recognition.maxAlternatives = 1
 
-const startRecordBtn = document.querySelector("[data-button='record']")
-const newSentenceBtn = document.querySelector("[data-button='new sentence']")
-const resultParagraph = document.querySelector("[data-paragraph='output']")
-const testParagraph = document.querySelector("[data-paragraph='test sentence']")
-const recordingStatus = document.querySelector(".status")
-
-function clearConfidence() {
-    recordingStatus.setAttribute("data-confidence", "")
-}
+const startRecordBtn = qs("[data-button='record']")
+const newSentenceBtn = qs("[data-button='new sentence']")
+const resultParagraph = qs("[data-paragraph='output']")
+const testParagraph = qs("[data-paragraph='test sentence']")
+const recordingStatus = qs(".status")
 
 newSentenceBtn.addEventListener("click", () => {
-    clearConfidence()
     sentencesArray = languageObjects[selectedLanguage][selectedDifficulty]
     let sentence =
         sentencesArray[Math.floor(Math.random() * sentencesArray.length)]
@@ -86,7 +89,6 @@ newSentenceBtn.addEventListener("click", () => {
 })
 
 startRecordBtn.addEventListener("click", () => {
-    clearConfidence()
     if (startRecordBtn.classList.contains("recording")) {
         recognition.abort()
         recordingStatus.classList.remove("animate-waves")
@@ -101,27 +103,33 @@ startRecordBtn.addEventListener("click", () => {
     }
 })
 
+
+
 recognition.onspeechend = function () {
     recognition.stop()
     recordingStatus.classList.remove("animate-waves")
     startRecordBtn.classList.remove("recording")
     console.log("Speech recognition has stopped.")
+    if (
+        !resultParagraph.classList.contains("success") &&
+        !resultParagraph.classList.contains("error")
+    ) recordingStatus.classList.add("show")
     startRecordBtn.disabled = true
 }
 
 recognition.onresult = function (event) {
     let testString = testParagraph.textContent
         .toLocaleLowerCase()
-        .replace(/[.,/#!$%^&*;:{}=-_~()]/g, "").replace(/\s{2}/g, ' ')
+        .replace(/[.,/#!$%^&*;:{}=-_~()]/g, "")
+        .replace(/\s{2}/g, " ")
     let result = event.results[0][0].transcript.toLocaleLowerCase()
-    let confidence = Math.floor(event.results[0][0].confidence * 100)
     let success = result.trim() === testString.trim()
-    if (success) {
-        recordingStatus.setAttribute("data-confidence", `${confidence}%`)
-    }
-    resultParagraph.textContent = capitalizeFirstLetter(result.replace(/(^|\W)i('?\s+)/gm, `$1I$2`))
+    resultParagraph.textContent = capitalizeFirstLetter(
+        result.replace(/(^|\W)i('?\s+)/gm, `$1I$2`)
+    )
     resultParagraph.classList.add(success ? "success" : "error")
     setTimeout(() => {
         startRecordBtn.disabled = false
-    },100)
+        recordingStatus.classList.remove("show")
+    }, 100)
 }

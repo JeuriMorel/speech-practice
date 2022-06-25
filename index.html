@@ -16,7 +16,28 @@
         <script type="module" src="script.js" defer></script>
     </head>
     <body>
+        <dialog>
+            <ol>
+                <li>Set your desired difficulty level and target language.</li>
+                <li>
+                    push the button to generate a sentence to test your
+                    pronunciation on.
+                </li>
+                <li>Hit the mic button to start recording.</li>
+                <li>
+                    You can use a custom sentence instead if you want to
+                    practice a specific one!
+                </li>
+            </ol>
+            <button class="btn close-modal">close</button>
+        </dialog>
         <main class="container">
+            <button
+                class="btn-info"
+                title="Click for instructions on how to use"
+            >
+                <i class="fa-solid fa-circle-info"></i>
+            </button>
             <div class="forms">
                 <form class="radio-form radio" data-form="difficulty">
                     <input
@@ -78,7 +99,7 @@
             </div>
 
             <div class="test">
-                <div class="status" data-confidence>
+                <div class="status">
                     <span></span><span></span><span></span><span></span
                     ><span></span><span></span>
                 </div>

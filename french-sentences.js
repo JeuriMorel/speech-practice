@@ -52,7 +52,7 @@ export const FRENCH = {
         "Aimer est un mauvais sort, comme ceux qu'il y a dans les contes, contre quoi on ne peut rien jusqu'à ce que l'enchantement ait cessé. ",
         "Notre amour de la vie n'est qu'une vieille liaison, dont nous ne savons pas nous débarrasser.",
         "Il est vraiment rare qu'on se quitte bien, car si on était bien, on ne se quitterait pas.",
-        "Le moi profond reste le meilleur des masques antirides.",
+        "Le moi profond reste le meilleur des masques anti-rides.",
         "Il vaut mieux rêver sa vie que la vivre, encore que la vivre, ce soit encore la rêver.",
         "Quand l'amour finit, l'habitude avait pris sa place.",
         "L'amour naît aussi bien d'un regard de mépris que d'un regard de bonté.",
