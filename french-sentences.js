@@ -1,4 +1,4 @@
-export const FRENCH = {
+export const FRENCH_SENTENCES = {
     BEGINNER: [
         "Bonsoir",
         "Merci",

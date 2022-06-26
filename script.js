@@ -1,5 +1,6 @@
-import { ENGLISH } from "./english-sentences.js"
-import { FRENCH } from "./french-sentences.js"
+import { ENGLISH_SENTENCES } from "./english-sentences.js"
+import { FRENCH_SENTENCES } from "./french-sentences.js"
+import { SPANISH_SENTENCES } from "./spanish-sentences.js"
 import { qs, qsa, capitalizeFirstLetter } from "./js-utility-funcs.js"
 
 const languageCodes = {
@@ -9,8 +10,9 @@ const languageCodes = {
 }
 
 const languageObjects = {
-    ENGLISH: ENGLISH,
-    FRENCH: FRENCH,
+    ENGLISH: ENGLISH_SENTENCES,
+    FRENCH: FRENCH_SENTENCES,
+    SPANISH: SPANISH_SENTENCES,
 }
 
 function resetButtons() {
@@ -87,7 +89,7 @@ editBtn.addEventListener("click", () => {
 
 function setCaret() {
     const text = testParagraph.childNodes[0]
-    if(!text) return
+    if (!text) return
     const range = document.createRange()
     const sel = window.getSelection()
 
@@ -151,7 +153,7 @@ recognition.onspeechend = function () {
 recognition.onresult = function (event) {
     let testString = testParagraph.textContent
         .toLocaleLowerCase()
-        .replace(/[.,/#!$%^&*;:{}=-_~()]/g, "")
+        .replace(/[.,/#!¡¿?$%^&*;:{}=-_~()]/g, "")
         .replace(/\s{2}/g, " ")
     let result = event.results[0][0].transcript.toLocaleLowerCase()
     let success = result.trim() === testString.trim()

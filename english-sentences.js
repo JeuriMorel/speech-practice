@@ -1,4 +1,4 @@
-export const ENGLISH = {
+export const ENGLISH_SENTENCES = {
     BEGINNER: [
         "The cat stretched",
         "He stood on his tiptoes",
