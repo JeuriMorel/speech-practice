@@ -1,8 +1,6 @@
 import { ENGLISH } from "./english-sentences.js"
 import { FRENCH } from "./french-sentences.js"
-import {qs, qsa, capitalizeFirstLetter} from "./js-utility-funcs.js"
-
-
+import { qs, qsa, capitalizeFirstLetter } from "./js-utility-funcs.js"
 
 const languageCodes = {
     ENGLISH: "en-US",
@@ -23,8 +21,8 @@ function resetButtons() {
 }
 
 //MODAL
-const btnInfo = qs('.btn-info')
-const modal = qs('dialog')
+const btnInfo = qs(".btn-info")
+const modal = qs("dialog")
 const btnCloseModal = qs(".close-modal")
 
 btnInfo.addEventListener("click", () => {
@@ -78,6 +76,39 @@ const newSentenceBtn = qs("[data-button='new sentence']")
 const resultParagraph = qs("[data-paragraph='output']")
 const testParagraph = qs("[data-paragraph='test sentence']")
 const recordingStatus = qs(".status")
+const editBtn = qs("[data-button='edit']")
+
+editBtn.addEventListener("click", () => {
+    recordingStatus.classList.remove("show", "animate-waves")
+    testParagraph.contentEditable = true
+    testParagraph.focus()
+    setCaret()
+})
+
+function setCaret() {
+    const text = testParagraph.childNodes[0]
+    if(!text) return
+    const range = document.createRange()
+    const sel = window.getSelection()
+
+    range.setStart(text, text.length)
+    range.collapse(true)
+
+    sel.removeAllRanges()
+    sel.addRange(range)
+}
+
+testParagraph.addEventListener("keypress", e => {
+    if (e.keyCode === 13) {
+        testParagraph.contentEditable = false
+    }
+})
+testParagraph.addEventListener("focusout", () => {
+    testParagraph.contentEditable = false
+    resultParagraph.textContent = ""
+    startRecordBtn.disabled = false
+    startRecordBtn.focus()
+})
 
 newSentenceBtn.addEventListener("click", () => {
     sentencesArray = languageObjects[selectedLanguage][selectedDifficulty]
@@ -86,6 +117,7 @@ newSentenceBtn.addEventListener("click", () => {
     resultParagraph.textContent = ""
     startRecordBtn.disabled = false
     testParagraph.textContent = sentence
+    recordingStatus.classList.remove("show")
 })
 
 startRecordBtn.addEventListener("click", () => {
@@ -103,8 +135,6 @@ startRecordBtn.addEventListener("click", () => {
     }
 })
 
-
-
 recognition.onspeechend = function () {
     recognition.stop()
     recordingStatus.classList.remove("animate-waves")
@@ -113,7 +143,8 @@ recognition.onspeechend = function () {
     if (
         !resultParagraph.classList.contains("success") &&
         !resultParagraph.classList.contains("error")
-    ) recordingStatus.classList.add("show")
+    )
+        recordingStatus.classList.add("show")
     startRecordBtn.disabled = true
 }
 

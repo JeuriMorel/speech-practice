@@ -163,8 +163,9 @@ span:nth-child(6) {
     font-weight: 400;
 }
 
-.sentence-recording {
+.sentence {
     padding: 1rem;
+    caret-color: hsl(var(--lt-blue-h), var(--lt-blue-s), var(--lt-blue-l));
 }
 
 .sentence-recording:not(:empty)::before {
@@ -210,7 +211,7 @@ span:nth-child(6) {
     top: 1px;
 }
 
-.btn-record {
+.btn-record, .btn-edit {
     --hue: var(--lt-blue-h);
     --saturation: var(--lt-blue-s);
     --lightness: calc(var(--lt-blue-l) + 15%);
@@ -231,8 +232,11 @@ span:nth-child(6) {
 }
 
 .btn-record:hover,
-.btn-record:focus-visible {
+.btn-record:focus-visible,
+.btn-edit:hover,
+.btn-edit:focus-visible {
     --lightness: var(--lt-blue-l);
+    opacity: 1;
 }
 
 .btn-new,
@@ -281,7 +285,7 @@ span:nth-child(6) {
     --hue: var(--lt-blue-h);
     --saturation: var(--lt-blue-s);
     --lightness: calc(var(--lt-blue-l) - 10%);
-    cursor: pointer;
+    cursor: help;
 
     position: absolute;
     display: grid;
@@ -303,6 +307,21 @@ span:nth-child(6) {
 .btn-info:focus-visible {
     outline: 2px dashed red;
     outline-offset: 2px;
+}
+
+.btn-edit{
+    width: 2rem;
+    height: 2rem;
+    font-size: 1rem;
+    display: inline-flex;
+    border-radius: 5px;
+    border-color: #aaa;
+    margin-left: 1rem;
+    opacity: 0.5;
+}
+
+.btn-edit::before{
+    margin: auto;
 }
 
 .forms {
@@ -398,10 +417,25 @@ dialog {
     text-transform: capitalize;
 }
 
+.modal-container {
+    gap: 0.5rem;
+}
+
 dialog::backdrop {
     background: rgba(0, 0, 0, 0.35);
 }
 
-.close-modal{
-    margin-top: 2rem;
+.close-modal {
+    font-weight: 900;
+    font-size: 2rem;
+    margin-left: auto;
+}
+
+ol{
+    gap: 0.5rem;
+}
+
+.fl-col{
+    display: flex;
+    flex-direction: column;
 }
