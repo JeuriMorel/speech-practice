@@ -91,7 +91,7 @@ export const ENGLISH_SENTENCES = {
         "I know nothing",
         "Rest assured",
         "He must be tired",
-        "How much time it will take",
+        "How much time will it take?",
         "I am doing my work",
         "I am full",
         "He will be in the room",

@@ -13,19 +13,22 @@
             referrerpolicy="no-referrer"
         />
         <link rel="stylesheet" href="styles.css" />
-        <script type="module" src="script.js" defer></script>
+        <script type="module" src="js/script.js" defer></script>
     </head>
     <body>
         <dialog>
             <div class="modal-container fl-col">
-                <button class="btn close-modal">&#10005;</button>
+                <button class="btn close-modal" title="close modal">&#10005;</button>
                 <ol class="fl-col">
-                    <li>Set your desired difficulty level and target language.</li>
+                    <li>
+                        Set your desired difficulty level and target language.
+                    </li>
                     <li>
                         push the button to generate a sentence to test your
                         pronunciation on.
                     </li>
                     <li>Hit the mic button to start recording.</li>
+                    <li>If you need a clue as to how to pronounce the sentence, click on the speaker button.</li>
                     <li>
                         You can create a custom sentence instead if you prefer!
                     </li>
@@ -104,15 +107,35 @@
                     <span></span><span></span><span></span><span></span
                     ><span></span><span></span>
                 </div>
-                <p
-                ><span class="sentence sentence-test"
-                    data-paragraph="test sentence"></span><span ><button class="fa-solid fa-pencil btn btn-edit" data-button='edit'></button></span></p>
+                <p>
+                    <span
+                        class="sentence sentence-test"
+                        data-paragraph="test sentence"
+                    ></span>
+                    <span class="btn-container">
+                        <span
+                        ><button
+                            class="fa-solid fa-pencil btn btn-edit"
+                            data-button="edit"
+                            title="Edit Sentence"
+                        ></button
+                    ></span>
+                    <span
+                        ><button
+                            class="fa-solid fa-volume-high btn btn-edit"
+                            data-button="speak"
+                            title="Play Sentence"
+                        ></button
+                    ></span>
+
+                    </span>
+                </p>
+
                 <p
                     class="sentence sentence-recording"
                     data-paragraph="output"
                 ></p>
             </div>
-
             <div class="buttons">
                 <button
                     type="button"
@@ -125,6 +148,7 @@
                     type="button"
                     class="btn btn-record"
                     data-button="record"
+                    title="Start Recording"
                     disabled
                 ></button>
             </div>
