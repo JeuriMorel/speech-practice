@@ -140,8 +140,10 @@ if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
             recognition.abort()
             recordingStatus.classList.remove("animate-waves")
             startRecordBtn.classList.remove("recording")
+            resultParagraph.classList.add("aborted")
         } else {
             recognition.start()
+            resultParagraph.classList.remove("aborted")
             recordingStatus.classList.add("animate-waves")
             startRecordBtn.classList.add("recording")
             resultParagraph.textContent = ""
@@ -159,7 +161,8 @@ if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
         setTimeout(() => {
             if (
                 resultParagraph.classList.contains("success") ||
-                resultParagraph.classList.contains("error")
+                resultParagraph.classList.contains("error") ||
+                resultParagraph.classList.contains("aborted")
             )
                 return
             recordingStatus.classList.add("show")
