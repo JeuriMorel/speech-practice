@@ -9,3 +9,10 @@ export function qsa(selector, parent = document) {
 export function capitalizeFirstLetter(string) {
     return string.charAt(0).toLocaleUpperCase() + string.slice(1)
 }
+
+export function removePunctuation(string) {
+    return string
+        .replace(/[\.,\/#!¡¿\?\$%\^&\*;:\{\}=\-_~\(\)]/gm, "")
+        .replace(/\s{2}/g, " ")
+        .trim()
+}

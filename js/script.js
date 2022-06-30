@@ -1,7 +1,12 @@
 import { ENGLISH_SENTENCES } from "./english-sentences.js"
 import { FRENCH_SENTENCES } from "./french-sentences.js"
 import { SPANISH_SENTENCES } from "./spanish-sentences.js"
-import { qs, qsa, capitalizeFirstLetter } from "./js-utility-funcs.js"
+import {
+    qs,
+    qsa,
+    capitalizeFirstLetter,
+    removePunctuation,
+} from "./js-utility-funcs.js"
 
 if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
     const languageCodes = {
@@ -49,6 +54,17 @@ if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
     //LANGUAGE FORM
     const languageForm = qs("[data-form='language']")
     const languageInputs = qsa("input", languageForm)
+    const startRecordBtn = qs("[data-button='record']")
+    const newSentenceBtn = qs("[data-button='new sentence']")
+    const resultParagraph = qs("[data-paragraph='output']")
+    const testParagraph = qs("[data-paragraph='test sentence']")
+    const recordingStatus = qs(".status")
+    const editBtn = qs("[data-button='edit']")
+    const speakBtn = qs("[data-button='speak']")
+    const SpeechRecognition =
+        window.SpeechRecognition || webkitSpeechRecognition
+
+    const recognition = new SpeechRecognition()
 
     languageInputs.forEach(input => {
         input.addEventListener("click", e => {
@@ -56,11 +72,6 @@ if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
             recognition.lang = languageCodes[selectedLanguage]
         })
     })
-
-    const SpeechRecognition =
-        window.SpeechRecognition || webkitSpeechRecognition
-
-    const recognition = new SpeechRecognition()
 
     let selectedLanguage = languageInputs
         .find(input => input.checked)
@@ -74,14 +85,6 @@ if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
     recognition.lang = languageCodes[selectedLanguage]
     recognition.interimResults = false
     recognition.maxAlternatives = 1
-
-    const startRecordBtn = qs("[data-button='record']")
-    const newSentenceBtn = qs("[data-button='new sentence']")
-    const resultParagraph = qs("[data-paragraph='output']")
-    const testParagraph = qs("[data-paragraph='test sentence']")
-    const recordingStatus = qs(".status")
-    const editBtn = qs("[data-button='edit']")
-    const speakBtn = qs("[data-button='speak']")
 
     editBtn.addEventListener("click", () => {
         recordingStatus.classList.remove("show", "animate-waves")
@@ -152,25 +155,20 @@ if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
         recordingStatus.classList.remove("animate-waves")
         startRecordBtn.classList.remove("recording")
         console.log("Speech recognition has stopped.")
-        if (
-            !resultParagraph.classList.contains("success") &&
-            !resultParagraph.classList.contains("error")
-        )
-            recordingStatus.classList.add("show")
-        startRecordBtn.disabled = true
-    }
 
-    function removePunctuation(string) {
-        return string
-            .replace(/[\.,\/#!¡¿\?\$%\^&\*;:\{\}=\-_~\(\)]/gm, "")
-            .replace(/\s{2}/g, " ")
-            .trim()
+        setTimeout(() => {
+            if (
+                resultParagraph.classList.contains("success") ||
+                resultParagraph.classList.contains("error")
+            )
+                return
+            recordingStatus.classList.add("show")
+            startRecordBtn.disabled = true
+        }, 500)
     }
 
     recognition.onresult = function (event) {
-        let testString = removePunctuation(
-            testParagraph.textContent
-        )
+        let testString = removePunctuation(testParagraph.textContent)
 
         let result = removePunctuation(event.results[0][0].transcript)
 
@@ -180,10 +178,9 @@ if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
             result.replace(/(^|\W)i('?\s+)/gm, `$1I$2`)
         )
         resultParagraph.classList.add(success ? "success" : "error")
-        setTimeout(() => {
-            startRecordBtn.disabled = false
-            recordingStatus.classList.remove("show")
-        }, 100)
+
+        startRecordBtn.disabled = false
+        recordingStatus.classList.remove("show")
     }
 } else {
     let body = qs("body")
@@ -195,5 +192,5 @@ if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
     >Check Browser Support</a>
     `
 
-    body.classList.add('body--error')
+    body.classList.add("body--error")
 }
