@@ -9,10 +9,15 @@ import {
 } from "./js-utility-funcs.js"
 
 if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
+    const SpeechRecognition =
+        window.SpeechRecognition || webkitSpeechRecognition
+
+    const recognition = new SpeechRecognition()
+
     const languageCodes = {
         ENGLISH: "en-US",
         SPANISH: "es-LA",
-        FRENCH: "fr-FR",
+        FRENCH: "fr_FR",
     }
 
     const languageObjects = {
@@ -61,10 +66,6 @@ if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
     const recordingStatus = qs(".status")
     const editBtn = qs("[data-button='edit']")
     const speakBtn = qs("[data-button='speak']")
-    const SpeechRecognition =
-        window.SpeechRecognition || webkitSpeechRecognition
-
-    const recognition = new SpeechRecognition()
 
     languageInputs.forEach(input => {
         input.addEventListener("click", e => {

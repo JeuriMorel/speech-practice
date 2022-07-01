@@ -12,7 +12,7 @@ export function capitalizeFirstLetter(string) {
 
 export function removePunctuation(string) {
     return string
-        .replace(/[\.,\/#!¡¿\?\$%\^&\*;:\{\}=\-_~\(\)]/gm, "")
+        .replace(/[\.,\/#!¡¿\?\$%\^&\*;:\{\}=\\_~\(\)]/gm, "")
         .replace(/\s{2}/g, " ")
         .trim()
 }
