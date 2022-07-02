@@ -13,6 +13,7 @@ if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
         window.SpeechRecognition || webkitSpeechRecognition
 
     const recognition = new SpeechRecognition()
+    speechSynthesis.getVoices() 
 
     const languageCodes = {
         ENGLISH: "en-US",
